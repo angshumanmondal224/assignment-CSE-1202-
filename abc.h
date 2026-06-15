@@ -1,201 +1,108 @@
+#ifndef ABC_H
+#define ABC_H
+
 #include <stdio.h>
-#include <stdbool.h>
-#include <math.h>
 
-int max(int a, int b);
-int min(int a, int b);
-void isOdd(int num);
-void isEven(int num);
-bool isPrime(int n);
-int digitsum(int digit);
-int reverseNumber(int num);
-void decimalToHexa(int num);
-void decimalToOctal(int num);
-void decimalToBinary(int num);
-int binaryToDecimal(long long binary);
-bool palindrome(int arr[], int n);
-long long factorial(int n);
-int gcd(int a, int b);
-long long power(int base, int exp);
-void swap(int a, int b);
+// ---------------- BASIC FUNCTIONS ----------------
 
-
-int max(int a, int b){
-    int max;
-    if (a>b) max = a;
-    else max = b;
-
-    return max;
+static inline int max(int a, int b) {
+    return (a > b) ? a : b;
 }
 
-int min(int a, int b){
-    int min;
-    if (a<b) min = a;
-    else min = b;
-
-    return min;
+static inline int min(int a, int b) {
+    return (a < b) ? a : b;
 }
 
-bool isPrime(int n){
-    if(n<2) return false;
-    if(n==2) return true;
-    if(n%2 == 0) return false;
-    int l = sqrt(n);
-    for(int i=3; i<=l;i = i+2){
-        if(n%i==0){
-            return false;
-        }
+static inline int isPrime(int n) {
+    if (n <= 1) return 0;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) return 0;
     }
-
-    return true;
+    return 1;
 }
 
-void isOdd(int num){
-    if(num % 2 !=0){
-        printf("%d is Odd\n",num);
-    }
-    else{
-        printf("%d is not Odd\n",num);
-    }
+static inline int isOdd(int n) {
+    return n % 2 != 0;
 }
 
-void isEven(int num){
-    if(num%2 == 0){
-        printf("%d is Even\n",num);
-    }
-    else{
-        printf("%d is not Even\n",num);
-    }
+static inline int isEven(int n) {
+    return n % 2 == 0;
 }
 
-int digitsum(int digit){
-    int sum=0;
-    if(digit <0){
-        digit = -digit;
+static inline int digitSum(int n) {
+    int sum = 0;
+    if (n < 0) n = -n;
+    while (n > 0) {
+        sum += n % 10;
+        n /= 10;
     }
-    while(digit !=0){
-        int r = digit%10;
-        sum+=r;
-        digit /=10;
-    }
-
     return sum;
 }
 
-int reverseNumber(int num){
-    int r_num = 0;
-    if(num <0) num =-num;
-    while(num > 0){
-        int r = num % 10;
-        r_num = r_num*10 + r;
-        num /=10;
+static inline int reverseNumber(int n) {
+    int rev = 0;
+    while (n != 0) {
+        rev = rev * 10 + (n % 10);
+        n /= 10;
     }
-
-    return r_num;
+    return rev;
 }
 
-void decimalToBinary(int num){
-    if(num ==0) {
-        printf("0\n");
-        return;
-    }
+// ---------------- CONVERSION FUNCTIONS ----------------
 
-    int b[32];
-    int i=0;
-    while(num >0){
-        b[i] = num % 2;
-        num /=2;
-        i++;
+// Decimal → Binary (as number like 1010)
+static inline long long decimalToBinary(int n) {
+    long long bin = 0, rem, i = 1;
+    while (n > 0) {
+        rem = n % 2;
+        bin += rem * i;
+        i *= 10;
+        n /= 2;
     }
-
-    for(int j = i-1; j>=0; j--){
-        printf("%d",b[j]);
-    }
-    printf("\n");
+    return bin;
 }
 
-void decimalToOctal(int num){
-    if(num ==0) {
-        printf("0\n");
-        return;
-    }
+// Binary → Decimal
+static inline int binaryToDecimal(long long n) {
+    int dec = 0, base = 1, rem;
 
-    int Oct[32];
-    int i=0;
-    while(num >0){
-        Oct[i] = num % 8;
-        num /=8;
-        i++;
-    }
-
-    for(int j = i-1; j>=0; j--){
-        printf("%d",Oct[j]);
-    }
-    printf("\n");
-}
-
-void decimalToHexa(int num){
-    if(num ==0) {
-        printf("0\n");
-        return;
-    }
-
-    int Hexa[32];
-    int i=0;
-    while(num >0){
-        int r = num % 16;
-        if(r<10){
-            Hexa[i] = r + '0';
-        }
-        else{
-            Hexa[i] = (r-10) + 'A';
-        }
-
-        num /=16;
-        i++;
-    }
-
-    for(int j = i-1; j>=0; j--){
-        printf("%c",Hexa[j]);
-    }
-    printf("\n");
-}
-
-bool palindrome(int arr[], int n){
-    for(int i = 0; i< n/2; i++){
-        if(arr[i] != arr[n-i-1]){
-            return false;
-        }
-    }
-    return true;
-}
-
-int binaryToDecimal(long long binary) {
-    int decimal = 0;
-    int base = 1;  // 2^0
-
-    while (binary > 0) {
-        int lastDigit = binary % 10;
-        binary /= 10;
-        decimal += lastDigit * base;
+    while (n > 0) {
+        rem = n % 10;
+        dec += rem * base;
         base *= 2;
+        n /= 10;
     }
-
-    return decimal;
+    return dec;
 }
 
+// Decimal → Octal
+static inline long long decimalToOctal(int n) {
+    long long oct = 0, i = 1;
 
-long long factorial(int n) {
-    if (n < 0)  return -1;      
-    if (n == 0 || n == 1) return 1;
-    long long result = 1;
-    for (int i = 2; i <= n; i++)
-        result *= i;
-    return result;
+    while (n > 0) {
+        oct += (n % 8) * i;
+        i *= 10;
+        n /= 8;
+    }
+    return oct;
 }
 
+// Decimal → Hex (string)
+static inline void decimalToHex(int n, char hex[]) {
+    sprintf(hex, "%X", n);
+}
 
-int gcd(int a, int b) {
+// ---------------- EXTRA FUNCTIONS ----------------
+
+static inline long long factorial(int n) {
+    long long fact = 1;
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+static inline int gcd(int a, int b) {
     while (b != 0) {
         int temp = b;
         b = a % b;
@@ -204,26 +111,20 @@ int gcd(int a, int b) {
     return a;
 }
 
-int lcm(int a, int b) {
-    if (a <= 0 || b <= 0) return -1; 
-    int lcm =  (a / gcd(a, b)) * b;
-    return lcm;        
+static inline int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
 }
 
-
-
-long long power(int base, int exp) {
-    if (exp < 0)  return -1;    
+static inline long long power(int base, int exp) {
     long long result = 1;
-    for (int i = 0; i < exp; i++)
+    for (int i = 0; i < exp; i++) {
         result *= base;
+    }
     return result;
 }
 
-void swap(int a, int b){
-    int temp = a;
-    a = b;
-    b = temp;
-
-    printf("%d %d\n",a,b);
+static inline int palindrome(int n) {
+    return n == reverseNumber(n);
 }
+
+#endif
