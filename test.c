@@ -1,65 +1,34 @@
-#include <stdio.h>
-#include<stdbool.h>
 #include "abc.h"
 
+int main() {
 
+    int a = 10, b = 25;
 
-int main(){
-    int n;
-    scanf("%d",&n);
-    int arr[n];
-    for(int i=0; i<n ; i++){
-        scanf("%d",&arr[i]);
-    }
+    printf("Max: %d\n", max(a, b));
+    printf("Min: %d\n", min(a, b));
 
-    bool flag = palindrome(arr, n);
-    if(flag){                       
-        printf("YES it is palindrome\n");
-    }
-    else{
-        printf("No it is not palindrome\n");
-    }
-    // long long binary; 
-    // scanf("%lld",&binary); 
-    // int decimal = binaryToDecimal(binary);
-    // printf("%d\n",decimal);
+    printf("IsPrime(7): %d\n", isPrime(7));
+    printf("IsOdd(7): %d\n", isOdd(7));
+    printf("IsEven(7): %d\n", isEven(7));
 
-    // int a,b;
-    // scanf("%d %d",&a,&b);
-    // isOdd(a);
-    // isEven(b);
-    // printf("Before swap: a=%d || b = %d\n",a,b);
-    // swap(a,b);
-    // printf("Maximum of %d and %d is = %d\n",a,b,max(a,b));
-    // printf("Minimum of %d and %d is = %d\n",a,b,min(a,b));
-    // printf("Factorial of %d is =%d\n",a,factorial(a)); 
-    // printf("GCD of %d and %d = %d\n",a,b,gcd(a,b));
-    // printf("LCM of %d and %d = %d\n",a,b,lcm(a,b));
-    // bool prime = isPrime(a);
-    // if(prime){
-    //     printf("%d is a prime number\n",a);
-    // }else{
-    //     printf("%d is not a prime number\n",a);
-    // }
+    printf("Digit Sum (1234): %d\n", digitSum(1234));
+    printf("Reverse (1234): %d\n", reverseNumber(1234));
 
-    // int number;
-    // scanf("%d",&number);
-    // int digit_sum = digitsum(number);
-    // int rev_num = reverseNumber(number);
-    // printf("digit sum of %d is = %d\n",number,digit_sum);
-    // printf("reverse of %d is = %d\n",number,rev_num);
+    printf("Decimal to Binary (10): %lld\n", decimalToBinary(10));
+    printf("Binary to Decimal (1010): %d\n", binaryToDecimal(1010));
+    printf("Decimal to Octal (10): %lld\n", decimalToOctal(10));
 
-    // decimalToBinary(number);
-    // decimalToOctal(number);
-    // decimalToHexa(number);
+    char hex[20];
+    decimalToHex(255, hex);
+    printf("Decimal to Hex (255): %s\n", hex);
 
-    // int ans = power(10,3);
-    // printf("%d\n",ans);
+    printf("Factorial (5): %lld\n", factorial(5));
+    printf("GCD (12,18): %d\n", gcd(12,18));
+    printf("LCM (12,18): %d\n", lcm(12,18));
+    printf("Power (2^5): %lld\n", power(2,5));
 
-    // int fact = factorial(5);
-    // printf("%d\n",fact);
-
-
+    printf("Palindrome (121): %d\n", palindrome(121));
 
     return 0;
+
 }
